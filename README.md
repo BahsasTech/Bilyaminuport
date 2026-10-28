@@ -2,7 +2,7 @@
 
 A personal developer portfolio built with **Next.js 15 (App Router)** and **Tailwind CSS v4**, deployed free on **Vercel**.
 
-Dark/light theme, fully responsive, zero UI dependencies, statically prerendered (so it stays fast and free on the Hobby plan).
+Dark/light theme, fully responsive, zero UI dependencies, plus a password-protected admin area for updating the profile picture, resume and profile details.
 
 ---
 
@@ -10,8 +10,13 @@ Dark/light theme, fully responsive, zero UI dependencies, statically prerendered
 
 ```bash
 npm install
-npm run dev      # http://localhost:3000
+Copy-Item .env.example .env.local   # PowerShell
+# cp .env.example .env.local        # macOS / Linux
+npm run dev                         # http://localhost:3000
 ```
+
+Without `ADMIN_PASSWORD`, development falls back to the password `admin`. Set it
+in `.env.local` before deploying.
 
 Other scripts:
 
@@ -74,28 +79,82 @@ It feeds the canonical URL, Open Graph tags, `sitemap.xml` and `robots.txt`.
 
 ---
 
+## Admin dashboard
+
+The site includes a small, self-contained admin area:
+
+| Route          | What it does                                                                                                                       |
+| -------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| `/admin/login` | Single-password sign in using `ADMIN_PASSWORD`.                                                                                    |
+| `/admin`       | Upload or replace the profile picture and resume PDF, and edit name, role, tagline, bio, contact links, availability and summary. |
+| `/resume`      | Public web resume built from the profile, with print/save-as-PDF and an optional uploaded PDF download.                            |
+
+Authentication uses a signed, HTTP-only session cookie valid for 8 hours. Password
+comparison and signature verification are constant-time. Set a long random
+`ADMIN_SESSION_SECRET` in production.
+
+### Storage
+
+| Environment                           | Profile data             | Uploaded files                   |
+| ------------------------------------- | ------------------------ | -------------------------------- |
+| Local development                     | `.data/profile.json`     | `public/uploads/`                |
+| Production with `BLOB_READ_WRITE_TOKEN` | Vercel Blob              | Vercel Blob (`portfolio/uploads/`) |
+
+To enable production uploads:
+
+1. In the Vercel dashboard open **Storage → Create → Blob**, then connect the store to the project.
+2. Add `ADMIN_PASSWORD`, `ADMIN_SESSION_SECRET` and `BLOB_READ_WRITE_TOKEN` under **Settings → Environment Variables**.
+3. Redeploy.
+
+Without a Blob token, Vercel's filesystem is read-only/ephemeral, so profile edits
+and uploads will not persist. The public site still works using the defaults in
+`src/content/site.ts`.
+
+`site.ts` remains the source of truth for skills, projects, stats and navigation;
+the admin dashboard only overrides the profile fields listed above.
+
+---
+
 ## Project structure
 
 ```
 src/
   app/
-    layout.tsx      # metadata, fonts, no-flash theme script
-    page.tsx        # page composition
-    globals.css     # theme tokens (light/dark) + Tailwind entry
-    icon.svg        # favicon
+    layout.tsx          # metadata, fonts, no-flash theme script
+    page.tsx            # page composition
+    globals.css         # theme tokens (light/dark), Tailwind entry, print styles
+    icon.svg            # favicon
     robots.ts
     sitemap.ts
+    resume/page.tsx     # public web resume
+    admin/
+      actions.ts        # login/logout + profile and upload server actions
+      login/page.tsx    # public sign-in page
+      (dashboard)/
+        layout.tsx      # auth guard + admin chrome
+        page.tsx        # dashboard
   components/
-    header.tsx      # sticky nav + mobile menu
-    hero.tsx
-    about.tsx       # About + Skills sections
-    projects.tsx    # filterable project grid (client component)
-    contact.tsx     # Contact + Footer
+    header.tsx          # sticky nav + mobile menu
+    hero.tsx            # hero with profile picture and resume CTA
+    about.tsx           # About + Skills sections
+    projects.tsx        # filterable project grid (client component)
+    resume-cta.tsx      # resume teaser on the home page
+    contact.tsx         # Contact + Footer
     theme-toggle.tsx
-    icons.tsx       # inline SVG icons (no icon library dependency)
+    print-button.tsx
+    icons.tsx           # inline SVG icons (no icon library dependency)
+    admin/
+      login-form.tsx
+      admin-dashboard.tsx
   content/
-    site.ts         # <- edit this
+    site.ts             # skills, projects, stats, nav + profile defaults
+  lib/
+    auth.ts             # password check, signed session cookie
+    profile.ts          # profile type, defaults and merge logic
+    storage.ts          # Vercel Blob / local file storage
+    forms.ts            # shared server-action state type
 ```
+
 
 ---
 
@@ -107,8 +166,9 @@ src/
 2. Go to [vercel.com/new](https://vercel.com/new), sign in with GitHub.
 3. Import the repository.
 4. Leave **Framework Preset = Next.js** and **Build Command = `npm run build`** — both are detected automatically.
-5. Click **Deploy**. You get a free `*.vercel.app` URL.
-6. Optional: add a custom domain under **Settings → Domains**.
+5. Add the environment variables from `.env.example` (**Settings → Environment Variables**), including a Vercel Blob token so admin uploads persist.
+6. Click **Deploy**. You get a free `*.vercel.app` URL.
+7. Optional: add a custom domain under **Settings → Domains**.
 
 ### Option B — Deploy from the command line
 
@@ -140,7 +200,8 @@ git remote add origin https://github.com/<you>/<repo>.git
 git push -u origin main
 ```
 
-`node_modules`, `.next` and `.env*` are already excluded by `.gitignore`.
+`node_modules`, `.next`, `.data`, uploaded files and `.env*` are already excluded
+by `.gitignore`; `.env.example` is intentionally kept.
 
 ---
 
@@ -168,6 +229,11 @@ toggle in `localStorage` under the `theme` key.
 ## Notes
 
 - **Node version**: Node 20.9+ is required by Next.js 15. Use Node 22 or newer.
+- **Admin security**: use a strong, unique `ADMIN_PASSWORD` and `ADMIN_SESSION_SECRET`.
+  The session cookie lasts 8 hours. `/admin` is excluded from search engines and
+  `robots.txt`, but the real protection is the password.
+- **Uploads**: local development writes to `.data/profile.json` and `public/uploads/`.
+  In production, set `BLOB_READ_WRITE_TOKEN` so edits survive deployments.
 - **OneDrive**: this project lives in a OneDrive-synced folder. `node_modules` is
   large and syncs slowly — consider moving the project to a plain local folder
   (e.g. `C:\Projects\Portfolio`) if builds feel sluggish, or add the folder to

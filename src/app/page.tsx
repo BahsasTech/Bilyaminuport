@@ -3,19 +3,26 @@ import { Contact, Footer } from "@/components/contact";
 import { Header } from "@/components/header";
 import { Hero } from "@/components/hero";
 import { Projects } from "@/components/projects";
+import { ResumeCta } from "@/components/resume-cta";
+import { getProfile } from "@/lib/profile";
+import { getGalleryImages } from "@/lib/gallery";
 
-export default function Home() {
+export default async function Home() {
+  const profile = await getProfile();
+  const gallery = await getGalleryImages();
+
   return (
     <>
-      <Header />
+      <Header profile={profile} />
       <main>
-        <Hero />
-        <About />
+        <Hero profile={profile} gallery={gallery} />
+        <About profile={profile} />
         <Skills />
         <Projects />
-        <Contact />
+        <ResumeCta profile={profile} />
+        <Contact profile={profile} />
       </main>
-      <Footer />
+      <Footer profile={profile} />
     </>
   );
 }

@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { site } from "@/content/site";
+import { getProfile } from "@/lib/profile";
 import "./globals.css";
+
+export const dynamic = "force-dynamic";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -13,46 +15,50 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  metadataBase: new URL(site.url),
-  title: {
-    default: `${site.name} — ${site.role}`,
-    template: `%s | ${site.name}`,
-  },
-  description: site.description,
-  keywords: [
-    "Bilyaminu Usman",
-    "BahsasTech",
-    "software engineer",
-    "full-stack developer",
-    "web developer",
-    "PHP developer",
-    "Node.js developer",
-    "Next.js developer",
-    "school management system",
-    "cooperative society software",
-    "Lagos, Nigeria",
-  ],
-  authors: [{ name: site.name, url: site.github }],
-  creator: site.name,
-  openGraph: {
-    type: "website",
-    locale: "en_US",
-    url: site.url,
-    siteName: site.name,
-    title: `${site.name} — ${site.role}`,
-    description: site.description,
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: `${site.name} — ${site.role}`,
-    description: site.description,
-  },
-  robots: {
-    index: true,
-    follow: true,
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const profile = await getProfile();
+
+  return {
+    metadataBase: new URL(profile.url),
+    title: {
+      default: `${profile.name} - ${profile.role}`,
+      template: `%s | ${profile.name}`,
+    },
+    description: profile.description,
+    keywords: [
+      profile.name,
+      profile.githubHandle,
+      "software engineer",
+      "full-stack developer",
+      "web developer",
+      "PHP developer",
+      "Node.js developer",
+      "Next.js developer",
+      "school management system",
+      "cooperative society software",
+      profile.location,
+    ],
+    authors: [{ name: profile.name, url: profile.github }],
+    creator: profile.name,
+    openGraph: {
+      type: "website",
+      locale: "en_US",
+      url: profile.url,
+      siteName: profile.name,
+      title: `${profile.name} - ${profile.role}`,
+      description: profile.description,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${profile.name} - ${profile.role}`,
+      description: profile.description,
+    },
+    robots: {
+      index: true,
+      follow: true,
+    },
+  };
+}
 
 const themeScript = `(function(){try{var t=localStorage.getItem("theme");var m=window.matchMedia("(prefers-color-scheme: dark)").matches;if(t==="dark"||(t!=="light"&&m)){document.documentElement.classList.add("dark")}}catch(e){}})();`;
 

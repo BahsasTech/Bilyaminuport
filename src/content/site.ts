@@ -85,6 +85,22 @@ export const skillGroups: SkillGroup[] = [
       "Vercel",
     ],
   },
+  {
+    title: "Networking & Cybersecurity",
+    items: [
+      "Network Fundamentals (TCP/IP, DNS, DHCP)",
+      "Firewall Configuration & Management",
+      "VPN Setup & Troubleshooting",
+      "Cybersecurity Fundamentals",
+      "Threat Detection & Incident Response",
+      "Vulnerability Assessment",
+      "Network Security",
+      "Wireshark",
+      "Nmap",
+      "Access Control & Authentication",
+      "Security Best Practices",
+    ],
+  },
 ];
 
 export type Project = {
@@ -257,5 +273,6 @@ export const navLinks = [
   { href: "#about", label: "About" },
   { href: "#skills", label: "Skills" },
   { href: "#projects", label: "Projects" },
+  { href: "/resume", label: "Resume" },
   { href: "#contact", label: "Contact" },
 ] as const;

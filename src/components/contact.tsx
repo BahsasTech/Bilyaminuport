@@ -1,7 +1,8 @@
-import { site } from "@/content/site";
+import Link from "next/link";
+import type { Profile } from "@/lib/profile";
 import { ArrowRightIcon, GithubIcon, MailIcon } from "./icons";
 
-export function Contact() {
+export function Contact({ profile }: { profile: Profile }) {
   return (
     <section
       id="contact"
@@ -28,21 +29,21 @@ export function Contact() {
 
             <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
               <a
-                href={`mailto:${site.email}`}
+                href={`mailto:${profile.email}`}
                 className="group inline-flex items-center gap-2 rounded-xl bg-accent px-5 py-3 text-sm font-semibold text-accent-fg transition-transform hover:scale-[1.02] focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
               >
                 <MailIcon className="h-4 w-4" />
-                {site.email}
+                {profile.email}
                 <ArrowRightIcon className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
               </a>
               <a
-                href={site.github}
+                href={profile.github}
                 target="_blank"
                 rel="noreferrer noopener"
                 className="inline-flex items-center gap-2 rounded-xl border border-border bg-card px-5 py-3 text-sm font-semibold text-foreground transition-colors hover:border-accent/60 hover:bg-background focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
               >
                 <GithubIcon className="h-4 w-4" />
-                {site.githubHandle}
+                {profile.githubHandle}
               </a>
             </div>
           </div>
@@ -52,12 +53,12 @@ export function Contact() {
   );
 }
 
-export function Footer() {
+export function Footer({ profile }: { profile: Profile }) {
   return (
     <footer className="border-t border-border py-10">
       <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-5 text-sm text-muted sm:flex-row sm:px-8">
         <p>
-          © {new Date().getFullYear()} {site.name}. Built with Next.js &amp;
+          © {new Date().getFullYear()} {profile.name}. Built with Next.js &amp;
           Tailwind CSS.
         </p>
         <div className="flex items-center gap-5">
@@ -67,8 +68,20 @@ export function Footer() {
           >
             Back to top
           </a>
+          <Link
+            href="/resume"
+            className="transition-colors hover:text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+          >
+            Resume
+          </Link>
+          <Link
+            href="/admin"
+            className="transition-colors hover:text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+          >
+            Admin
+          </Link>
           <a
-            href={site.github}
+            href={profile.github}
             target="_blank"
             rel="noreferrer noopener"
             className="transition-colors hover:text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
@@ -76,7 +89,7 @@ export function Footer() {
             GitHub
           </a>
           <a
-            href={`mailto:${site.email}`}
+            href={`mailto:${profile.email}`}
             className="transition-colors hover:text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
           >
             Email

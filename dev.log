@@ -1,0 +1,18 @@
+
+> portfolio@0.1.0 dev
+> next dev
+
+   ▲ Next.js 15.5.28
+   - Local:        http://localhost:3000
+   - Network:      http://172.20.10.3:3000
+   - Experiments (use with caution):
+     · serverActions
+
+ ✓ Starting...
+[Error: EINVAL: invalid argument, readlink 'C:\Users\USER\OneDrive\Documents\MyProject\Portfolio\.next\server\next-font-manifest.json'] {
+  errno: -4071,
+  code: 'EINVAL',
+  syscall: 'readlink',
+  path: 'C:\\Users\\USER\\OneDrive\\Documents\\MyProject\\Portfolio\\.next\\server\\next-font-manifest.json'
+}
+[?25h

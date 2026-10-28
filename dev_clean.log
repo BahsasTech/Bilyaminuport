@@ -1,0 +1,78 @@
+
+> portfolio@0.1.0 dev
+> next dev
+
+   ▲ Next.js 15.5.28
+   - Local:        http://localhost:3000
+   - Network:      http://172.20.10.3:3000
+   - Experiments (use with caution):
+     · serverActions
+
+ ✓ Starting...
+ ✓ Ready in 5.6s
+ ○ Compiling / ...
+Request timed out after 3000ms
+
+Retrying 1/3...
+ ✓ Compiled / in 25.4s (989 modules)
+ GET / 200 in 27498ms
+ ⚠ Cross origin request detected from 172.20.10.3 to /_next/* resource. In a future major version of Next.js, you will need to explicitly configure "allowedDevOrigins" in next.config to allow this.
+Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allowedDevOrigins
+ ○ Compiling /icon.svg ...
+ ✓ Compiled /icon.svg in 823ms (724 modules)
+ GET /icon.svg?75dd116c69908fcc 200 in 1228ms
+ GET / 200 in 1434ms
+ ○ Compiling /resume ...
+ ✓ Compiled /resume in 2s (991 modules)
+ GET /resume 200 in 3617ms
+ GET /resume 200 in 607ms
+ GET /resume 200 in 216ms
+ GET / 200 in 636ms
+ ○ Compiling /admin ...
+ ✓ Compiled /admin in 2.1s (1008 modules)
+ GET /admin 307 in 4254ms
+ ○ Compiling /admin/login ...
+ ✓ Compiled /admin/login in 5.2s (1370 modules)
+ GET /admin/login 200 in 12976ms
+ GET / 200 in 632ms
+ GET / 200 in 1211ms
+ GET /admin 307 in 1233ms
+ GET /admin/login 200 in 446ms
+ GET /admin 200 in 212ms
+ POST /admin/login 303 in 1122ms
+ ○ Compiling /admin/profile ...
+ ✓ Compiled /admin/profile in 1681ms (1381 modules)
+ GET /admin/profile 200 in 2782ms
+ POST /admin/profile 200 in 214ms
+ GET / 200 in 1075ms
+ ○ Compiling /icon.svg ...
+ ✓ Compiled /icon.svg in 1887ms (1138 modules)
+ GET /icon.svg?75dd116c69908fcc 200 in 3227ms
+ GET / 200 in 4527ms
+ GET /resume 200 in 192ms
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 3.7s (1386 modules)
+ GET /uploads/resume-1792869840323-e5467a11.pdf 404 in 5648ms
+ GET /resume 200 in 242ms
+ GET / 200 in 256ms
+ ✓ Compiled in 3.6s (1395 modules)
+ GET /resume 200 in 1511ms
+ GET / 200 in 1533ms
+ POST /admin/profile 200 in 262ms
+ POST /admin/profile 200 in 198ms
+ POST /admin/profile 200 in 183ms
+ GET /admin 200 in 160ms
+ GET /admin/profile 200 in 129ms
+ ○ Compiling /admin/projects ...
+ ✓ Compiled /admin/projects in 2.9s (1402 modules)
+ GET /admin/projects 200 in 4183ms
+ GET / 200 in 1726ms
+ ○ Compiling /admin/skills ...
+ ✓ Compiled /admin/skills in 2.7s (1409 modules)
+ GET /admin/projects 200 in 3956ms
+ GET /admin/skills 200 in 4085ms
+ GET / 200 in 400ms
+ GET / 200 in 938ms
+ ○ Compiling /icon.svg ...
+ ✓ Compiled /icon.svg in 2.3s (1138 modules)
+ GET /icon.svg?75dd116c69908fcc 200 in 2894ms

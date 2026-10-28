@@ -1,11 +1,13 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
-import { navLinks, site } from "@/content/site";
+import { navLinks } from "@/content/site";
+import type { Profile } from "@/lib/profile";
 import { CloseIcon, GithubIcon, MenuIcon } from "./icons";
 import { ThemeToggle } from "./theme-toggle";
 
-export function Header() {
+export function Header({ profile }: { profile: Profile }) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -37,29 +39,39 @@ export function Header() {
             B
           </span>
           <span className="tracking-tight">
-            {site.name}
+            {profile.name}
             <span className="ml-1.5 hidden text-sm font-normal text-muted sm:inline">
-              / {site.role}
+              / {profile.role}
             </span>
           </span>
         </a>
 
         <nav className="hidden items-center gap-1 md:flex">
-          {navLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="rounded-lg px-3 py-2 text-sm text-muted transition-colors hover:text-foreground"
-            >
-              {link.label}
-            </a>
-          ))}
+          {navLinks.map((link) =>
+            link.href.startsWith("#") ? (
+              <a
+                key={link.href}
+                href={link.href}
+                className="rounded-lg px-3 py-2 text-sm text-muted transition-colors hover:text-foreground"
+              >
+                {link.label}
+              </a>
+            ) : (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="rounded-lg px-3 py-2 text-sm text-muted transition-colors hover:text-foreground"
+              >
+                {link.label}
+              </Link>
+            ),
+          )}
         </nav>
 
         <div className="flex items-center gap-2">
           <ThemeToggle />
           <a
-            href={site.github}
+            href={profile.github}
             target="_blank"
             rel="noreferrer noopener"
             aria-label="GitHub profile"
@@ -84,13 +96,23 @@ export function Header() {
           <ul className="mx-auto max-w-6xl px-5 py-3 sm:px-8">
             {navLinks.map((link) => (
               <li key={link.href}>
-                <a
-                  href={link.href}
-                  onClick={() => setOpen(false)}
-                  className="block rounded-lg px-2 py-3 text-sm text-muted transition-colors hover:bg-card hover:text-foreground"
-                >
-                  {link.label}
-                </a>
+                {link.href.startsWith("#") ? (
+                  <a
+                    href={link.href}
+                    onClick={() => setOpen(false)}
+                    className="block rounded-lg px-2 py-3 text-sm text-muted transition-colors hover:bg-card hover:text-foreground"
+                  >
+                    {link.label}
+                  </a>
+                ) : (
+                  <Link
+                    href={link.href}
+                    onClick={() => setOpen(false)}
+                    className="block rounded-lg px-2 py-3 text-sm text-muted transition-colors hover:bg-card hover:text-foreground"
+                  >
+                    {link.label}
+                  </Link>
+                )}
               </li>
             ))}
           </ul>

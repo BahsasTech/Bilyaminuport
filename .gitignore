@@ -39,3 +39,12 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local admin data and uploaded files
+/.data
+/public/uploads/*
+!/public/uploads/.gitkeep
+
+# keep the env template in version control
+!.env.example
+!/public/uploads/gallery/

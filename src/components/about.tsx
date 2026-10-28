@@ -1,6 +1,7 @@
-import { skillGroups, site } from "@/content/site";
+import { skillGroups } from "@/content/site";
+import type { Profile } from "@/lib/profile";
 
-export function About() {
+export function About({ profile }: { profile: Profile }) {
   return (
     <section id="about" className="scroll-mt-20 border-t border-border py-20 sm:py-28">
       <div className="mx-auto grid max-w-6xl gap-12 px-5 sm:px-8 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.3fr)]">
@@ -14,7 +15,7 @@ export function About() {
         </div>
 
         <div className="space-y-5 text-base leading-relaxed text-muted">
-          {site.bio.map((paragraph) => (
+          {profile.bio.map((paragraph) => (
             <p key={paragraph}>{paragraph}</p>
           ))}
         </div>

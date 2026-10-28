@@ -69,3 +69,39 @@ body {
     transition-duration: 0.01ms !important;
   }
 }
+
+@media print {
+  :root,
+  .dark {
+    --background: #ffffff;
+    --foreground: #111827;
+    --muted: #4b5563;
+    --border: #d1d5db;
+    --card: #ffffff;
+    --accent: #0f766e;
+    --accent-fg: #ffffff;
+    --accent-glow: transparent;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+
+  body {
+    background: #ffffff;
+    color: #111827;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  @page {
+    margin: 14mm;
+  }
+}
